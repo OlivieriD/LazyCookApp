@@ -8,9 +8,9 @@ struct ContentView: View {
     @StateObject private var recipeVM: RecipeViewModel
     @StateObject private var mealPlanVM: MealPlanViewModel
     
-    init() {
-        // Must initialize the services before the ViewModels
-        let dataService = DataService(modelContext: try! ModelContext(.init(for: Recipe.self, MealPlan.self)))
+    init(modelContext: ModelContext) {
+        // Use the SAME modelContext throughout the app
+        let dataService = DataService(modelContext: modelContext)
         let nutritionAPI = NutritionAPI()
         
         // Initialize ViewModels with their dependencies

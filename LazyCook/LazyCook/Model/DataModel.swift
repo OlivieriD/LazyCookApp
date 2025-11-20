@@ -1,19 +1,29 @@
 import Foundation
 import SwiftData
 
-struct Ingredient: Codable, Identifiable {
-    let id = UUID()
+// MARK: - Ingredient Model
+@Model
+final class Ingredient {
+    var id: UUID
     var name: String
     var quantity: String
     var unit: String
+    
+    init(id: UUID = UUID(), name: String, quantity: String, unit: String) {
+        self.id = id
+        self.name = name
+        self.quantity = quantity
+        self.unit = unit
+    }
 }
 
+// MARK: - Recipe Model
 @Model
 final class Recipe {
     var title: String
     var instructions: String
     var servings: Int
-    var ingredients: [Ingredient]
+    @Relationship(deleteRule: .cascade) var ingredients: [Ingredient]
     var nutritionalInfo: String
     
     init(title: String = "", instructions: String = "", servings: Int = 1, ingredients: [Ingredient] = [], nutritionalInfo: String = "Not fetched") {
@@ -25,6 +35,7 @@ final class Recipe {
     }
 }
 
+// MARK: - MealPlan Model
 @Model
 final class MealPlan {
     var date: Date
